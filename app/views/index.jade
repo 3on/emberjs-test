@@ -1,4 +1,14 @@
-script(type="text/x-handlebars")
-  {{#view App.Word}}
-  This is a {word}
-  {{/view}}
+script(type="text/x-handlebars").
+    <select id="translation">
+      <option value="enfr">en <-> fr</option>
+      <option value="fren">fr <-> en</option>
+    </select>
+    {{view App.AddSearchView id="new-search" placeholder="search on WordReference" }}
+    <ul>
+    {{#each App.searchesController}}
+    <li>
+      <span class="">{{ firstWordOrignal }}</span>
+      <span class="">{{ firstWordTranslation }}</span>
+    </li>
+    {{/each}}
+    </ul>

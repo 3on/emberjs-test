@@ -5,6 +5,7 @@
 
 var request = require('request');
 var express = require('express');
+var fetch = require('fetch');
 
 var app = module.exports = express.createServer();
 
@@ -41,10 +42,16 @@ app.get('/word/:lang/:word', function(req, res) {
   var url = 'http://api.wordreference.com/76d0e/json/' + req.params.lang + '/' + req.params.word
   console.log(url)
   
+  fetch.fetchUrl(url, function(error,meta, body) {
+    res.send(body)
+  });
+
+  /*
   request({url: url}, function(r, resp) {
-    console.log(resp)
+    //console.log(resp)
     res.send(resp.body);
   })
+  */
   
 });
 

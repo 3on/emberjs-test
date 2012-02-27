@@ -1,52 +1,45 @@
-var App = Ember.Application.create()
+var App = Em.Application.create();
 
+App.Search = Em.Object.extend({
+	  result 	: null
+	, date		: (new Date()).getTime()
+	, kind 		: 'fren'
+	, keyWords	: 'blabla'
+	, firstWordOrignal : function() {
+	  var words = this.keyWords.split(' ')
+	  return words[0]
+	}.property()
+	
+	, firstWordTranslation : function() {
+	  
+	  if (this.result['term0']['PrincipalTranslations'])
+	    return this.result['term0']['PrincipalTranslations']['0']['FirstTranslation']['term']
+	  
+	  if (this.result['term0']['Entries']['0']['FirstTranslation']['term'])
+  	  return this.result['term0']['Entries']['0']['FirstTranslation']['term']
+  	  
+	}.property()
+	
+});
 
-App.Word = Ember.Object.extend({
-  english : null,
-  french : null,
-  
-  print: function() {
-    console.log("English: " + this.english + " French: " + this.french)
-  }
+App.searchesController = Em.ArrayController.create({
+	  content 	: []
+	, add		: function(search) {
+		this.insertAt(0, search)
+	}
 })
 
-App.wordController = Ember.ArrayController.create({
-  content : [],
-  
-  addWord : function(en,fr) {
-    var n = App.Word.create({english: en, french : fr})
-    this.pushObject(n)
-  }
-});
-
-
-
-
-var words = [
-  Word.create({english: "be", french: "etre"})
-]
-
-App.Word = Ember.View.extend({
-  click: function(e) {
-   alert("clicked") 
-  }
-});
-
-App.
-
-
-
-$(function() {
-  
-  var test = Word.create({
-    english : "",
-    french : ""
-  });
-  
-  
-  /*
-  $.get('/word/fren/etre', function(data) {
-    console.log(data)
-  });
-  */
+App.AddSearchView = Em.TextField.extend({
+	insertNewline : function() {
+		var value = this.get('value')
+		var trans = $('#translation option:selected').val();
+		
+		if (value) {
+			$.get('/word/' + trans + '/' + value, function(data) {
+				var res = JSON.parse(data);
+				console.log(trans, res)
+				App.searchesController.add(App.Search.create({kind : trans, keyWords: value, result: res}));
+			})
+		}
+	}
 })
