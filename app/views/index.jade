@@ -6,9 +6,18 @@ script(type="text/x-handlebars").
     {{view App.AddSearchView id="new-search" placeholder="search on WordReference" }}
     <ul>
     {{#each App.searchesController}}
-    <li>
-      <span class="">{{ firstWordOrignal }}</span>
-      <span class="">{{ firstWordTranslation }}</span>
+    <li class="{{ kind }}">
+      <span class="original" {{ action "select" }}>{{ firstWordOrignal }}</span>
+      <span class="translation" {{ action "select" }}>{{ firstWordTranslation }}</span>
     </li>
     {{/each}}
     </ul>
+    
+    {{#collection contentBinding="App.searchesController" tagName="ul"}}
+      {{#view App.SearchView truc="App.searchesController.content.firstWordTranslation"}}
+        <span class="original">{{firstWordOrignal}}</span>
+        <span class="translation">{{firstWordTranslation}}</span>
+        {{truc}}
+      {{/view}}
+    {{/collection}}
+    

@@ -25,9 +25,23 @@ App.Search = Em.Object.extend({
 App.searchesController = Em.ArrayController.create({
 	  content 	: []
 	, add		: function(search) {
-		this.insertAt(0, search)
+		  this.insertAt(0, search)
+	}
+	, select : function() {
+	    alert(this)
 	}
 })
+
+
+App.SearchView = Em.View.extend({
+    click : function() {
+	    alert(this.keyWords)
+	}
+	, templateName : 'search'
+	, firstWordOrignal : 'App.searchesController.content.firstWordOrignal'
+	, firstWordTranslation : 'App.searchesController.content.firstWordTranslation'
+})
+
 
 App.AddSearchView = Em.TextField.extend({
 	insertNewline : function() {
