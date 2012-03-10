@@ -1,23 +1,36 @@
+script(type="text/x-handlebars", data-template-name="searchView").
+  <span class="original">{{ orignal }}</span>
+  <span class="translation">{{ translation }}</span>
+
+
 script(type="text/x-handlebars").
     <select id="translation">
       <option value="enfr">en <-> fr</option>
       <option value="fren">fr <-> en</option>
     </select>
     {{view App.AddSearchView id="new-search" placeholder="search on WordReference" }}
+    
+    <h1>Ugly way ?</h1>
     <ul>
     {{#each App.searchesController}}
     <li class="{{ kind }}">
-      <span class="original" {{ action "select" }}>{{ firstWordOrignal }}</span>
-      <span class="translation" {{ action "select" }}>{{ firstWordTranslation }}</span>
+      <span class="original" {{ action "click" }}>{{ firstWordOrignal }}</span>
+      <span class="translation" {{ action "click" }}>{{ firstWordTranslation }}</span>
     </li>
     {{/each}}
     </ul>
     
-    {{#collection contentBinding="App.searchesController" tagName="ul"}}
-      {{#view App.SearchView truc="App.searchesController.content.firstWordTranslation"}}
-        <span class="original">{{firstWordOrignal}}</span>
-        <span class="translation">{{firstWordTranslation}}</span>
-        {{truc}}
-      {{/view}}
-    {{/collection}}
-    
+    <h1> Stylish way ?</h1>
+    {{#view App.SearchesView}}
+      {{#collection }}
+      {{/collection}}
+      
+      <ul>
+      {{#each searches}}
+        <li>
+          {{view App.SearchView }}
+        </li>
+      {{/each}}
+      </ul>
+    {{/view}}
+  

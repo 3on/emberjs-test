@@ -25,22 +25,45 @@ App.Search = Em.Object.extend({
 App.searchesController = Em.ArrayController.create({
 	  content 	: []
 	, add		: function(search) {
-		  this.insertAt(0, search)
+		  this.pushObject(search)
 	}
-	, select : function() {
-	    alert(this)
+	, click : function() {
+	    alert("clicked")
 	}
 })
 
+App.SearchesView = Em.View.extend({
+    click : function() {
+      console.log(this)
+      console.log(this.get('keyWords'), this.get('kind'))
+	    //alert(this.get('content'))
+	  }
+  , searchesBinding : 'App.searchesController.content'
+  , filtered : function () {
+    return this.get('searches');
+    /*
+    return this.get('searches').filter(function(item, index, self) {
+      console.log(item)
+      return (index == 1)
+    })*/
+  }.property('searches')
+	
+	//, originalBinding : 'App.searchesController.content.firstWordOrignal'
+	//, translationBinding : 'App.searchesController.content.firstWordTranslation'
+})
 
 App.SearchView = Em.View.extend({
-    click : function() {
-	    alert(this.keyWords)
-	}
-	, templateName : 'search'
-	, firstWordOrignal : 'App.searchesController.content.firstWordOrignal'
-	, firstWordTranslation : 'App.searchesController.content.firstWordTranslation'
-})
+    templateName : 'searchView'
+  , originalBinding : 'App.searchesController.content.firstWordOrignal'
+	, translationBinding : 'App.searchesController.content.firstWordTranslation'
+	, keyWordsBinding : 'App.searchesController.content.Search.keyWords'
+	, life : "42"
+	, click : function() {
+    console.log(this)
+    console.log(this.get('keyWords'), this.get('kind'))
+    //alert(this.get('content'))
+  }
+});
 
 
 App.AddSearchView = Em.TextField.extend({
@@ -56,4 +79,9 @@ App.AddSearchView = Em.TextField.extend({
 			})
 		}
 	}
+})
+
+
+$(function() {
+  
 })
