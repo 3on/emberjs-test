@@ -1,6 +1,7 @@
 script(type="text/x-handlebars", data-template-name="searchView").
   <span class="original">{{ orignal }}</span>
   <span class="translation">{{ translation }}</span>
+  <span>{{life}}</span>
 
 
 script(type="text/x-handlebars").
@@ -14,7 +15,7 @@ script(type="text/x-handlebars").
     <ul>
     {{#each App.searchesController}}
     <li class="{{ kind }}">
-      <span class="original" {{ action "click" }}>{{ firstWordOrignal }}</span>
+      <span class="original" {{ action "click" }}>{{ firstWordOriginal }}</span>
       <span class="translation" {{ action "click" }}>{{ firstWordTranslation }}</span>
     </li>
     {{/each}}
@@ -22,13 +23,13 @@ script(type="text/x-handlebars").
     
     <h1> Stylish way ?</h1>
     {{#view App.SearchesView}}
-      {{#collection }}
-      {{/collection}}
-      
       <ul>
       {{#each searches}}
         <li>
-          {{view App.SearchView }}
+          {{view App.SearchView contentBinding="this"}}
+          
+          <span class="original">{{ firstWordOriginal }}</span>
+          <span class="translation">{{ firstWordTranslation }}</span>
         </li>
       {{/each}}
       </ul>

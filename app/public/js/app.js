@@ -5,7 +5,7 @@ App.Search = Em.Object.extend({
 	, date		: (new Date()).getTime()
 	, kind 		: 'fren'
 	, keyWords	: 'blabla'
-	, firstWordOrignal : function() {
+	, firstWordOriginal : function() {
 	  var words = this.keyWords.split(' ')
 	  return words[0]
 	}.property()
@@ -47,14 +47,11 @@ App.SearchesView = Em.View.extend({
       return (index == 1)
     })*/
   }.property('searches')
-	
-	//, originalBinding : 'App.searchesController.content.firstWordOrignal'
-	//, translationBinding : 'App.searchesController.content.firstWordTranslation'
 })
 
 App.SearchView = Em.View.extend({
     templateName : 'searchView'
-  , originalBinding : 'App.searchesController.content.firstWordOrignal'
+  , originalBinding : 'App.searchesController.content.firstWordOriginal'
 	, translationBinding : 'App.searchesController.content.firstWordTranslation'
 	, keyWordsBinding : 'App.searchesController.content.Search.keyWords'
 	, life : "42"
